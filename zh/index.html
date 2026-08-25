@@ -43,6 +43,12 @@ nav .links a{color:var(--ink-2);text-decoration:none}
 nav .links a:hover{color:var(--ink)}
 @media(max-width:680px){nav .wrap{height:auto;padding-top:.5rem;padding-bottom:.5rem;flex-wrap:wrap}
   nav .links{margin-left:0;width:100%;gap:.9rem;font-size:.76rem;overflow-x:auto;padding-bottom:.25rem}}
+.chan{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem;margin:1.4rem 0 0}
+.chan a{display:flex;flex-direction:column;gap:.3rem;padding:1rem 1.1rem;border:1px solid var(--line);
+  border-radius:10px;text-decoration:none;color:var(--ink);transition:border-color .15s}
+.chan a:hover{border-color:var(--amber)}
+.chan a b{font-size:.95rem}
+.chan a span{font-size:.78rem;color:var(--ink-3);word-break:break-all}
 nav .langs{display:flex;gap:.55rem;align-items:center;font-size:.78rem;flex-shrink:0}
 nav .langs a{color:var(--ink-3);text-decoration:none;padding:.15rem .1rem;white-space:nowrap}
 nav .langs a:hover{color:var(--ink)}
@@ -160,7 +166,7 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
   <div class="brand">Still <span>Up</span></div>
   <div class="links">
     <a href="#why333">为何 333</a><a href="#concept">概念</a><a href="#who">职业</a><a href="#rarity">稀有度</a><a href="#cast">阵容</a>
-    <a href="#mint">铸造</a><a href="#verify">验证</a><a href="#next">路线</a><a href="#faq">常见问题</a>
+    <a href="#mint">铸造</a><a href="#verify">验证</a><a href="#next">路线</a><a href="#channels">官方渠道</a><a href="#faq">常见问题</a>
   </div>
   <div class="langs"><a href="../">English</a><a href="../ko/">한국어</a><a href="../zh/" class="on">中文</a><a href="../ja/">日本語</a></div>
 </div></nav>
@@ -257,7 +263,7 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
     <div style="margin:1.3rem 0 0;padding:1rem 1.1rem;border:1px solid var(--line);border-radius:10px">
       <p style="font-size:.86rem;margin:0 0 .5rem"><strong>创作者在这次销售中一张也不会买。</strong></p>
       <p style="font-size:.82rem;margin:0;opacity:.85">在价格递增的结构里，创作者可以买自己的货来把价格推上去。付出的钱反正会回到自己手上，所以毫无损失。<strong>这是合约无法阻止的一类行为，因此写在这里。</strong></p>
-      <p style="font-size:.82rem;margin:.5rem 0 0;opacity:.85">运营钱包是 <span class="mono" style="word-break:break-all">__OWNER__</span>。这个地址收到的只有<strong>创作者的三张，以及销售结束后剩下的库存</strong>。销售结束后任何人都能在链上核对。</p>
+      <p style="font-size:.82rem;margin:.5rem 0 0;opacity:.85">运营钱包是 <span class="mono" style="word-break:break-all">0x1C83E96f0031163d76401fDA2B5f1956CcFb9FD0</span>。这个地址收到的只有<strong>创作者的三张，以及销售结束后剩下的库存</strong>。销售结束后任何人都能在链上核对。</p>
       <p style="font-size:.78rem;margin:.5rem 0 0;opacity:.6">用别的钱包购买这件事，无法用证明来排除。这不是被强制的规则，而是一个承诺 — 请这样理解。</p>
     </div>
     <p style="font-size:.84rem;margin:.5rem 0 0;opacity:.8">区间只有 3 张宽，所以在你点击付款的空档里可能有人先买走，价格随之上涨。为了不让交易失败，钱包会显示<strong>比实际价格略高的金额</strong>。差额由<strong>合约在同一笔交易内立即退回</strong> — 实际扣除的是上表的价格。</p>
@@ -343,6 +349,21 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
     <p>取而代之的是可以核对的东西 — 复现抽签的生成器与数据在铸造前公开，最终哈希提交到链上，连回收未售库存也被合约限定为只按编号顺序。<strong>目前这些都还没有公开。</strong></p></div></details>
   <details><summary>这是投资产品吗？</summary><div class="body">
     <p>不是。不承诺收益，不募集资金，不承诺任何实用功能。333 张画就是全部。</p></div></details>
+</div></section>
+
+<section id="channels"><div class="wrap">
+  <div class="eyebrow">官方渠道</div>
+  <h2>官方渠道</h2>
+  <p><strong>除此之外都是冒充。我们不在任何其他地方发布公告。</strong></p>
+  <div class="chan">
+    <a href="https://farcaster.xyz/stillup" target="_blank" rel="noopener">
+      <b>Farcaster</b><span class="mono">@stillup</span></a>
+    <a href="https://basescan.org/address/0x533b7bc61014023A36602Cd88267A0b817B03Dd8" target="_blank" rel="noopener">
+      <b>合约</b><span class="mono">0x533b…03Dd8</span></a>
+    <a href="https://stillup-nft.github.io/stillup/">
+      <b>铸造网站</b><span class="mono">stillup-nft.github.io/stillup</span></a>
+  </div>
+  <p class="mono" style="font-size:.78rem;color:var(--ink-3);margin-top:1rem;word-break:break-all">0x533b7bc61014023A36602Cd88267A0b817B03Dd8</p>
 </div></section>
 
 <footer><div class="wrap">

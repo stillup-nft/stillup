@@ -43,6 +43,12 @@ nav .links a{color:var(--ink-2);text-decoration:none}
 nav .links a:hover{color:var(--ink)}
 @media(max-width:680px){nav .wrap{height:auto;padding-top:.5rem;padding-bottom:.5rem;flex-wrap:wrap}
   nav .links{margin-left:0;width:100%;gap:.9rem;font-size:.76rem;overflow-x:auto;padding-bottom:.25rem}}
+.chan{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem;margin:1.4rem 0 0}
+.chan a{display:flex;flex-direction:column;gap:.3rem;padding:1rem 1.1rem;border:1px solid var(--line);
+  border-radius:10px;text-decoration:none;color:var(--ink);transition:border-color .15s}
+.chan a:hover{border-color:var(--amber)}
+.chan a b{font-size:.95rem}
+.chan a span{font-size:.78rem;color:var(--ink-3);word-break:break-all}
 nav .langs{display:flex;gap:.55rem;align-items:center;font-size:.78rem;flex-shrink:0}
 nav .langs a{color:var(--ink-3);text-decoration:none;padding:.15rem .1rem;white-space:nowrap}
 nav .langs a:hover{color:var(--ink)}
@@ -160,7 +166,7 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
   <div class="brand">Still <span>Up</span></div>
   <div class="links">
     <a href="#why333">Why 333</a><a href="#concept">Concept</a><a href="#who">Jobs</a><a href="#rarity">Rarity</a><a href="#cast">Cast</a>
-    <a href="#mint">Mint</a><a href="#verify">Verify</a><a href="#next">Roadmap</a><a href="#faq">FAQ</a>
+    <a href="#mint">Mint</a><a href="#verify">Verify</a><a href="#next">Roadmap</a><a href="#channels">Official channels</a><a href="#faq">FAQ</a>
   </div>
   <div class="langs"><a href="./" class="on">English</a><a href="ko/">한국어</a><a href="zh/">中文</a><a href="ja/">日本語</a></div>
 </div></nav>
@@ -257,7 +263,7 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
     <div style="margin:1.3rem 0 0;padding:1rem 1.1rem;border:1px solid var(--line);border-radius:10px">
       <p style="font-size:.86rem;margin:0 0 .5rem"><strong>The creator will not buy a single card in this sale.</strong></p>
       <p style="font-size:.82rem;margin:0;opacity:.85">On a rising curve, the creator can buy their own supply to push the price up. The money comes back to them anyway, so it costs nothing. <strong>This is not the kind of thing a contract can prevent, so it is written here instead.</strong></p>
-      <p style="font-size:.82rem;margin:.5rem 0 0;opacity:.85">The operating wallet is <span class="mono" style="word-break:break-all">__OWNER__</span>. All it receives is <strong>the three founder cards and whatever is left over after the sale</strong>. Anyone can check this on-chain once the sale ends.</p>
+      <p style="font-size:.82rem;margin:.5rem 0 0;opacity:.85">The operating wallet is <span class="mono" style="word-break:break-all">0x1C83E96f0031163d76401fDA2B5f1956CcFb9FD0</span>. All it receives is <strong>the three founder cards and whatever is left over after the sale</strong>. Anyone can check this on-chain once the sale ends.</p>
       <p style="font-size:.78rem;margin:.5rem 0 0;opacity:.6">Buying through a different wallet cannot be ruled out by proof. This is a promise, not an enforced rule — please read it as one.</p>
     </div>
     <p style="font-size:.84rem;margin:.5rem 0 0;opacity:.8">The bands are only 3 cards wide, so someone can buy ahead of you between the quote and the transaction. To keep it from failing, your wallet will show <strong>slightly more than the real price</strong>. The difference is <strong>refunded by the contract in the same transaction</strong> — what actually leaves your wallet is the price in the table above.</p>
@@ -343,6 +349,21 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
     <p>What is offered instead is what can be checked — the generator and data to reproduce the draw are published before minting, the final hash is committed on-chain, and even claiming unsold supply is bound by the contract to strict numeric order. <strong>None of it is published yet.</strong></p></div></details>
   <details><summary>Is this an investment?</summary><div class="body">
     <p>No. No returns are promised, no funds are raised, no utility is promised. 333 pictures is all there is.</p></div></details>
+</div></section>
+
+<section id="channels"><div class="wrap">
+  <div class="eyebrow">Official channels</div>
+  <h2>Official channels</h2>
+  <p><strong>Everything else is a fake. Nothing is announced anywhere but here.</strong></p>
+  <div class="chan">
+    <a href="https://farcaster.xyz/stillup" target="_blank" rel="noopener">
+      <b>Farcaster</b><span class="mono">@stillup</span></a>
+    <a href="https://basescan.org/address/0x533b7bc61014023A36602Cd88267A0b817B03Dd8" target="_blank" rel="noopener">
+      <b>Contract</b><span class="mono">0x533b…03Dd8</span></a>
+    <a href="https://stillup-nft.github.io/stillup/">
+      <b>Mint site</b><span class="mono">stillup-nft.github.io/stillup</span></a>
+  </div>
+  <p class="mono" style="font-size:.78rem;color:var(--ink-3);margin-top:1rem;word-break:break-all">0x533b7bc61014023A36602Cd88267A0b817B03Dd8</p>
 </div></section>
 
 <footer><div class="wrap">

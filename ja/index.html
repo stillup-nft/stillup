@@ -43,6 +43,12 @@ nav .links a{color:var(--ink-2);text-decoration:none}
 nav .links a:hover{color:var(--ink)}
 @media(max-width:680px){nav .wrap{height:auto;padding-top:.5rem;padding-bottom:.5rem;flex-wrap:wrap}
   nav .links{margin-left:0;width:100%;gap:.9rem;font-size:.76rem;overflow-x:auto;padding-bottom:.25rem}}
+.chan{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem;margin:1.4rem 0 0}
+.chan a{display:flex;flex-direction:column;gap:.3rem;padding:1rem 1.1rem;border:1px solid var(--line);
+  border-radius:10px;text-decoration:none;color:var(--ink);transition:border-color .15s}
+.chan a:hover{border-color:var(--amber)}
+.chan a b{font-size:.95rem}
+.chan a span{font-size:.78rem;color:var(--ink-3);word-break:break-all}
 nav .langs{display:flex;gap:.55rem;align-items:center;font-size:.78rem;flex-shrink:0}
 nav .langs a{color:var(--ink-3);text-decoration:none;padding:.15rem .1rem;white-space:nowrap}
 nav .langs a:hover{color:var(--ink)}
@@ -160,7 +166,7 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
   <div class="brand">Still <span>Up</span></div>
   <div class="links">
     <a href="#why333">なぜ 333</a><a href="#concept">コンセプト</a><a href="#who">仕事</a><a href="#rarity">レアリティ</a><a href="#cast">キャスト</a>
-    <a href="#mint">ミント</a><a href="#verify">検証</a><a href="#next">今後</a><a href="#faq">FAQ</a>
+    <a href="#mint">ミント</a><a href="#verify">検証</a><a href="#next">今後</a><a href="#channels">公式チャンネル</a><a href="#faq">FAQ</a>
   </div>
   <div class="langs"><a href="../">English</a><a href="../ko/">한국어</a><a href="../zh/">中文</a><a href="../ja/" class="on">日本語</a></div>
 </div></nav>
@@ -257,7 +263,7 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
     <div style="margin:1.3rem 0 0;padding:1rem 1.1rem;border:1px solid var(--line);border-radius:10px">
       <p style="font-size:.86rem;margin:0 0 .5rem"><strong>作った人はこの販売で一枚も買いません。</strong></p>
       <p style="font-size:.82rem;margin:0;opacity:.85">価格が上がる仕組みでは、作った人が自分の分を買って価格を押し上げられます。払った金はどのみち自分に戻るので損もしません。<strong>コントラクトでは防げない種類のことなので、代わりにここに書いておきます。</strong></p>
-      <p style="font-size:.82rem;margin:.5rem 0 0;opacity:.85">運営ウォレットは <span class="mono" style="word-break:break-all">__OWNER__</span> です。このアドレスが受け取るのは<strong>創設者分の三枚と、締め切り後に残った在庫</strong>だけです。販売が終われば誰でもオンチェーンで確認できます。</p>
+      <p style="font-size:.82rem;margin:.5rem 0 0;opacity:.85">運営ウォレットは <span class="mono" style="word-break:break-all">0x1C83E96f0031163d76401fDA2B5f1956CcFb9FD0</span> です。このアドレスが受け取るのは<strong>創設者分の三枚と、締め切り後に残った在庫</strong>だけです。販売が終われば誰でもオンチェーンで確認できます。</p>
       <p style="font-size:.78rem;margin:.5rem 0 0;opacity:.6">別のウォレットを使って買うことまでは証明で防げません。これは強制されるルールではなく約束です — そのように読んでください。</p>
     </div>
     <p style="font-size:.84rem;margin:.5rem 0 0;opacity:.8">区間が 3 枚と細かいため、決済を押している間に先に買われて価格が上がることがあります。取引が失敗しないよう、ウォレットには<strong>実際の価格より少し多い金額</strong>が表示されます。その差額は<strong>同じ取引の中でコントラクトがすぐ返します</strong> — 実際に出ていくのは上の表の価格です。</p>
@@ -343,6 +349,21 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
     <p>かわりに確かめられるもので代えるつもりです — 抽選を再現する生成器とデータをミント前に公開し、最終ハッシュをオンチェーンにコミットし、売れ残りを受け取るときも番号順にしか従えないようコントラクトで縛りました。<strong>いまはまだ、そのどれも公開されていません。</strong></p></div></details>
   <details><summary>投資商品ですか？</summary><div class="body">
     <p>いいえ。収益を約束せず、資金を募らず、ユーティリティも約束しません。絵 333 枚がすべてです。</p></div></details>
+</div></section>
+
+<section id="channels"><div class="wrap">
+  <div class="eyebrow">公式チャンネル</div>
+  <h2>公式チャンネル</h2>
+  <p><strong>これ以外はすべて偽物です。ここ以外の場所では何も告知しません。</strong></p>
+  <div class="chan">
+    <a href="https://farcaster.xyz/stillup" target="_blank" rel="noopener">
+      <b>Farcaster</b><span class="mono">@stillup</span></a>
+    <a href="https://basescan.org/address/0x533b7bc61014023A36602Cd88267A0b817B03Dd8" target="_blank" rel="noopener">
+      <b>コントラクト</b><span class="mono">0x533b…03Dd8</span></a>
+    <a href="https://stillup-nft.github.io/stillup/">
+      <b>ミントサイト</b><span class="mono">stillup-nft.github.io/stillup</span></a>
+  </div>
+  <p class="mono" style="font-size:.78rem;color:var(--ink-3);margin-top:1rem;word-break:break-all">0x533b7bc61014023A36602Cd88267A0b817B03Dd8</p>
 </div></section>
 
 <footer><div class="wrap">
