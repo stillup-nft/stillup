@@ -3,7 +3,7 @@ export const CONFIG = {
   chainId: 8453,
   chainName: "Base",
   rpc: "https://mainnet.base.org",
-  contract: "0xB5f085Ea8BDf79F9D20D503466A7077EFFF8c3BD", // ← 배포 후 교체
+  contract: "0x533b7bc61014023A36602Cd88267A0b817B03Dd8", // ← 배포 후 교체
   explorer: "https://basescan.org",
   // 주소별 Merkle 증명: proofBase + lowercase(address) + ".json" → { "proof": ["0x..", ...] }
   // 경로는 mint.js 가 있는 app/ 을 기준으로 푼다 (문서 위치와 무관)
