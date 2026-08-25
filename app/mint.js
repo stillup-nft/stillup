@@ -2,6 +2,7 @@ import { createPublicClient, createWalletClient, custom, http, defineChain,
          formatEther, getAddress, BaseError, ContractFunctionRevertedError } from "./vendor/viem.js";
 import { CONFIG } from "./config.js";
 import { ABI } from "./abi.js";
+import { L } from "./i18n.js";
 
 // ── 설정. 배포된 사이트에서는 컨트랙트와 체인을 고정하고, 로컬에서만 오버라이드를 허용한다.
 const q = new URLSearchParams(location.search);
@@ -101,7 +102,7 @@ async function fetchProof(addr) {
 // ── 지갑 ────────────────────────────────────────────────────
 async function connect() {
   const p = window.ethereum;
-  if (!p) return say("지갑이 없습니다. 브라우저 지갑을 설치한 뒤 다시 시도해 주세요.", true);
+  if (!p) return say(L.noWallet, true);
   try {
     // 리스너를 먼저 건다 — 체인 전환이 거절돼도 이후 수동 전환을 감지할 수 있어야 한다
     if (!listening) {
@@ -126,7 +127,7 @@ async function connect() {
     try {
       const code = await pub.getCode({ address: account });
       delegated = !!code && code.toLowerCase().startsWith("0xef0100");
-      if (delegated) say("이 지갑은 스마트 계정으로 위임되어 있습니다. 민팅이 실패할 수 있습니다.", true);
+      if (delegated) say(L.delegatedWarn, true);
     } catch { delegated = false; }
     await render();
   } catch (e) { say(friendly(e), true); await render(); }
@@ -160,11 +161,11 @@ async function doMint(n) {
   if (busy) return;                          // 전송 중 두 번째 클릭을 막는다
   if (!walletClient || !account) return connect();
   if (wrongChain) return switchOrTell();
-  if (!Number.isSafeInteger(n) || n < 1) return say("수량을 확인해 주세요.", true);
+  if (!Number.isSafeInteger(n) || n < 1) return say(L.e.ZeroQuantity, true);
   const s = state;
   if (!s || (s.phase !== "public" && s.phase !== "allowlist")) return;
   const useAL = s.phase === "allowlist";
-  if (useAL && !proof) return say("이 주소는 알로우리스트에 없습니다. 퍼블릭 시작을 기다려 주세요.", true);
+  if (useAL && !proof) return say(L.notAllowlisted, true);
 
   try {
     setBusy(true);
@@ -181,10 +182,10 @@ async function doMint(n) {
       value,
     });
     const hash = await walletClient.writeContract(request);
-    say(`전송됨 · ${short(hash)} · 확인을 기다리는 중`);
+    say(L.sent(short(hash)));
     const rc = await pub.waitForTransactionReceipt({ hash });
     if (rc.status === "success") {
-      say(`${n}장 민팅 완료.`, false, `${cfg.explorer}/tx/${hash}`);
+      say(L.done(n), false, `${cfg.explorer}/tx/${hash}`);
     } else say(await whyReverted(request, rc), true);
     await render();
   } catch (e) { say(friendly(e), true); }
@@ -195,39 +196,22 @@ async function doMint(n) {
 async function whyReverted(request, rc) {
   try {
     await pub.call({ ...request, blockNumber: rc.blockNumber });
-    return "거래가 실패했습니다.";
+    return L.txFailed;
   } catch (e) { return friendly(e); }
 }
 
 // ── 에러를 사람 말로 ─────────────────────────────────────────
-const ERRORS = {
-  NotStarted: "아직 시작 전입니다.",
-  Ended: "민팅 창이 끝났습니다.",
-  SoldOut: "남은 물량이 없습니다.",
-  WalletCapExceeded: "지갑당 3장까지입니다.",
-  WrongPayment: "보낸 금액이 부족합니다. 페이지를 새로고침한 뒤 다시 시도해 주세요.",
-  BadProof: "알로우리스트 증명이 올바르지 않습니다.",
-  SupplyIsClosed: "물량이 봉인되었습니다.",
-  ZeroQuantity: "수량을 확인해 주세요.",
-  // 아래는 민팅 경로에서는 나오지 않지만, 해독 못 해서 뭉뚱그리는 것보다는 낫다
-  NotArmed: "아직 리빌이 예약되지 않았습니다.",
-  TooEarly: "아직 이릅니다.",
-  Stale: "예약 블록이 만료되었습니다. 다시 예약해야 합니다.",
-  Frozen: "메타데이터가 고정되었습니다.",
-  WindowLocked: "판매 일정은 시작 후 되돌릴 수 없습니다.",
-  Disabled: "사용할 수 없는 기능입니다.",
-  BadAddress: "주소가 올바르지 않습니다.",
-};
+const ERRORS = L.e;
 function friendly(e) {
-  if (e?.code === 4001 || /User rejected|denied/i.test(e?.message || "")) return "지갑에서 거절되었습니다.";
-  if (delegated) return "이 지갑은 스마트 계정으로 위임되어 있어 NFT 를 받지 못합니다. 다른 지갑으로 시도해 주세요.";
+  if (e?.code === 4001 || /User rejected|denied/i.test(e?.message || "")) return L.rejected;
+  if (delegated) return L.delegatedErr;
   if (e instanceof BaseError) {
     const rev = e.walk((x) => x instanceof ContractFunctionRevertedError);
     const name = rev?.data?.errorName;
     if (name && ERRORS[name]) return ERRORS[name];
-    if (/insufficient funds/i.test(e.message)) return "잔액이 부족합니다.";
+    if (/insufficient funds/i.test(e.message)) return L.lowFunds;
   }
-  return "요청을 처리하지 못했습니다. 잠시 후 다시 시도해 주세요.";
+  return L.generic;
 }
 
 // ── 화면 ────────────────────────────────────────────────────
@@ -237,7 +221,7 @@ function say(text, bad = false, link = null) {
   if (link) {
     el.appendChild(document.createTextNode(" "));
     const a = document.createElement("a");
-    a.href = link; a.target = "_blank"; a.rel = "noopener"; a.textContent = "거래 보기";
+    a.href = link; a.target = "_blank"; a.rel = "noopener"; a.textContent = L.viewTx;
     el.appendChild(a);
   }
   el.className = "mintmsg" + (bad ? " bad" : "");
@@ -253,13 +237,13 @@ async function switchOrTell() {
 }
 
 const PHASE_TEXT = {
-  unset: ["민팅 일정 공지 예정", "시작 전"],
-  soon: ["민팅 시작 전", "시작 전"],
-  allowlist: ["알로우리스트 우선", "민팅"],
-  public: ["퍼블릭 민팅 중", "민팅"],
-  soldout: ["완판", "완판"],
-  ended: ["민팅 창 종료", "종료됨"],
-  closed: ["물량 봉인 완료", "봉인됨"],
+  unset: [L.phUnset, L.beforeStart],
+  soon: [L.phSoon, L.beforeStart],
+  allowlist: [L.phAllowlist, L.mint],
+  public: [L.phPublic, L.mint],
+  soldout: [L.phSoldout, L.soldout],
+  ended: [L.phEnded, L.ended],
+  closed: [L.phClosed, L.sealed],
 };
 
 async function render() {
@@ -278,8 +262,8 @@ async function render() {
   } catch {
     if (seq !== renderSeq) return;
     rpcFails++;
-    $("mintState").textContent = "네트워크 상태를 확인하는 중";
-    if (rpcFails >= 2) say("네트워크가 불안정합니다. 화면의 숫자가 최신이 아닐 수 있습니다.", true);
+    $("mintState").textContent = L.checking;
+    if (rpcFails >= 2) say(L.unstable, true);
     if (btn) btn.disabled = true;
     return;
   }
@@ -287,9 +271,9 @@ async function render() {
 
   const [label, btnText] = PHASE_TEXT[s.phase] || PHASE_TEXT.unset;
   // 체인 시각을 못 읽어 브라우저 시계로 판정한 경우 — 단계 표시가 틀릴 수 있다
-  $("mintState").textContent = s.clockOnly ? label + " (시각 확인 중)" : label;
+  $("mintState").textContent = s.clockOnly ? label + L.clockOnly : label;
   const left = s.available;
-  $("mintProgress").textContent = `${s.saleMax - left} / ${s.saleMax} · 남은 ${left}`;
+  $("mintProgress").textContent = L.progress(s.saleMax - left, s.saleMax, left);
   const bar = $("mintBar"); if (bar) bar.style.width = `${Number(s.saleMinted * 100n / s.saleMax)}%`;
 
   const qty = $("mintQty");
@@ -303,8 +287,8 @@ async function render() {
                   && left > 0n && s.mine < s.cap && n !== null && n >= 1;
 
   if (btn) {
-    if (!account)        { btn.textContent = "지갑 연결"; btn.disabled = false; }
-    else if (wrongChain) { btn.textContent = `${cfg.chainName} 로 전환`; btn.disabled = false; }
+    if (!account)        { btn.textContent = L.connect; btn.disabled = false; }
+    else if (wrongChain) { btn.textContent = L.switchTo(cfg.chainName); btn.disabled = false; }
     else                 { btn.textContent = btnText; btn.disabled = !canMint; }
     if (busy) btn.disabled = true;               // 전송 중에는 무엇도 버튼을 열지 못한다
   }
@@ -316,9 +300,9 @@ async function render() {
   const who = $("mintWho");
   if (who) {
     if (!account) who.textContent = "";
-    else if (wrongChain) who.textContent = `${short(account)} · ${cfg.chainName} 가 아닙니다`;
-    else who.textContent = `${short(account)} · 보유 ${s.mine}/${s.cap}`
-      + (s.phase === "allowlist" ? (proof ? " · 알로우리스트 ✓" : " · 알로우리스트 아님") : "");
+    else if (wrongChain) who.textContent = L.wrongChain(short(account), cfg.chainName);
+    else who.textContent = L.held(short(account), s.mine, s.cap)
+      + (s.phase === "allowlist" ? (proof ? L.alYes : L.alNo) : "");
   }
 }
 
@@ -330,7 +314,7 @@ function boot() {
     if (!account) return connect();
     if (wrongChain) return switchOrTell();
     const n = readQty();
-    if (n === null) return say("수량은 1 이상의 정수여야 합니다.", true);
+    if (n === null) return say(L.qty, true);
     doMint(n);
   });
   let t = null;
