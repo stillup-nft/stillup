@@ -19,6 +19,9 @@ const chain = defineChain({
   nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
   rpcUrls: { default: { http: [cfg.rpc] } },
   blockExplorers: { default: { name: "Explorer", url: cfg.explorer } },
+  // multicall3 은 Base 를 포함한 대부분의 체인에 같은 주소로 배포돼 있다.
+  // 이게 없으면 viem 이 개별 eth_call 로 흩어 보내고, 공용 RPC 가 429 로 막는다.
+  contracts: { multicall3: { address: "0xca11bde05977b3631167028862be2a173976ca11" } },
 });
 const pub = createPublicClient({ chain, transport: http(cfg.rpc) });
 const ZERO = "0x0000000000000000000000000000000000000000";
@@ -60,14 +63,15 @@ async function load() {
     const blk = await pub.getBlock();
     bn = blk.number; chainNow = blk.timestamp;
   } catch { /* 아래에서 브라우저 시계로 대체한다 */ }
-  const [saleMinted, saleMax, cap, alStart, pubStart, end, closed, revealed, mine,
-         totalMinted, maxSupply] = await Promise.all([
-    read("saleMinted", [], bn), read("SALE_MAX", [], bn), read("WALLET_CAP", [], bn),
-    read("allowlistStart", [], bn), read("saleStart", [], bn), read("saleEnd", [], bn),
-    read("supplyClosed", [], bn), read("startingIndexSet", [], bn),
-    account ? read("mintedBy", [account], bn) : Promise.resolve(0n),
-    read("totalMinted", [], bn), read("MAX_SUPPLY", [], bn),
-  ]);
+  // 공용 RPC 는 개별 eth_call 을 쏟아내면 429 로 막는다 — 한 번의 multicall 로 묶는다.
+  const names = ["saleMinted","SALE_MAX","WALLET_CAP","allowlistStart","saleStart","saleEnd",
+                 "supplyClosed","startingIndexSet","totalMinted","MAX_SUPPLY"];
+  const calls = names.map((functionName) => ({ address: cfg.contract, abi: ABI, functionName }));
+  if (account) calls.push({ address: cfg.contract, abi: ABI, functionName: "mintedBy", args: [account] });
+  const res = await pub.multicall({ contracts: calls, allowFailure: false, ...(bn ? { blockNumber: bn } : {}) });
+  const [saleMinted, saleMax, cap, alStart, pubStart, end, closed, revealed,
+         totalMinted, maxSupply] = res;
+  const mine = account ? res[10] : 0n;
   // 체인 시각을 쓴다. 브라우저 시계가 빠르면 아직 안 열린 민팅 버튼이 열려 보이고,
   // 느리면 열린 민팅이 잠겨 보인다. 체인을 못 읽을 때만 시계로 대체한다.
   const now = chainNow ?? BigInt(Math.floor(Date.now() / 1000));
@@ -258,13 +262,17 @@ async function render() {
     const next = await load();
     if (seq !== renderSeq) return;               // 늦게 끝난 렌더가 최신 화면을 덮어쓰지 않게
     state = next;
+    if (rpcFails > 0) {                       // 복구되면 경고를 지운다 — 안 그러면 겁주는 문구가 계속 남는다
+      const m = $("mintMsg");
+      if (m && m.textContent === L.unstable) say("");
+    }
     rpcFails = 0;
   } catch {
     if (seq !== renderSeq) return;
     rpcFails++;
     $("mintState").textContent = L.checking;
-    if (rpcFails >= 2) say(L.unstable, true);
-    if (btn) btn.disabled = true;
+    if (rpcFails >= 2) say(L.unstable, true); // 한 번 튀는 건 흔하다. 연속 실패일 때만 알린다
+    if (btn) { btn.textContent = L.checking; btn.disabled = true; }
     return;
   }
   const s = state; if (!s) return;
