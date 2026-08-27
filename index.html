@@ -246,20 +246,20 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
 
 <section id="mint"><div class="wrap">
   <div class="eyebrow">Mint</div>
-  <h2>Not open yet</h2>
+  <h2>First come, first served</h2>
   <div class="mintbox" id="mintLive">
     <span class="state"><i></i><span id="mintState" aria-live="polite">Preparing · mint schedule to be announced</span></span>
     <div class="tw" style="margin:1.4rem 0 0"><table>
       <thead><tr><th>Position</th><th class="c">Price</th><th>Note</th></tr></thead>
       <tbody>
-        <tr><td>1st – 3rd</td><td class="c mono">0.030 ETH</td><td>Allowlist first</td></tr>
+        <tr><td>1st – 3rd</td><td class="c mono">0.030 ETH</td><td>opening price</td></tr>
         <tr><td>4th – 6th</td><td class="c mono">0.031 ETH</td><td></td></tr>
         <tr><td>7th – 9th</td><td class="c mono">0.032 ETH</td><td></td></tr>
         <tr><td class="mono">⋮</td><td class="c mono">⋮</td><td>+0.001 ETH every 3</td></tr>
         <tr><td>328th – 330th</td><td class="c mono">0.139 ETH</td><td>last</td></tr>
       </tbody>
     </table></div>
-    <p style="font-size:.84rem;margin:1.1rem 0 0"><strong>The price rises 0.001 ETH for every 3 sold.</strong> If all 330 go, it rises <strong>109 times</strong> and the last one costs 0.139 ETH — 27.885 ETH in total at a full sellout. <strong>It never goes back down.</strong> What the allowlist buys you is not a separate discount but <strong>first access to the cheapest band</strong>.</p>
+    <p style="font-size:.84rem;margin:1.1rem 0 0"><strong>The price rises 0.001 ETH for every 3 sold.</strong> If all 330 go, it rises <strong>109 times</strong> and the last one costs 0.139 ETH — 27.885 ETH in total at a full sellout. <strong>It never goes back down.</strong> There is no allowlist — everyone walks in through the same door, and earlier simply means cheaper.</p>
     <div style="margin:1.3rem 0 0;padding:1rem 1.1rem;border:1px solid var(--line);border-radius:10px">
       <p style="font-size:.86rem;margin:0 0 .5rem"><strong>The creator will not buy a single card in this sale.</strong></p>
       <p style="font-size:.82rem;margin:0;opacity:.85">On a rising curve, the creator can buy their own supply to push the price up. The money comes back to them anyway, so it costs nothing. <strong>This is not the kind of thing a contract can prevent, so it is written here instead.</strong></p>
@@ -288,7 +288,7 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
       <div><b>3</b><span>per wallet</span></div>
     </div>
   </div>
-  <p>The mint window <strong>will be 30 days</strong> once it opens. <strong>There will never be more than 333</strong> — it is a constant in the contract and no function can raise it.</p>
+  <p>The mint window is <strong>30 days</strong>. <strong>There will never be more than 333</strong> — it is a constant in the contract and no function can raise it.</p>
   <p>Whatever is unsold at the close <strong>goes to the creator.</strong> Written here rather than hidden. But it is <strong>all or nothing</strong> — a single call mints <strong>every</strong> remaining token, <strong>in strict numeric order</strong>, and it can only be called once. The creator cannot choose how many, and cannot choose which artworks. The layout (offset) becomes public once the sale ends, so any discretion at all would allow cherry-picking. That is why the contract removed it.</p>
   <p>The claim is only possible <strong>after the sale window closes</strong>. Nothing can be taken mid-sale.</p>
 </div></section>
@@ -297,7 +297,7 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
   <div class="eyebrow">Verify</div>
   <h2>You can check the draw yourself</h2>
   <p>The 333 assignments are <strong>deterministic from a fixed seed</strong>. Run it again with the same seed and you get the same result.</p>
-  <p>The hash below is <strong>final</strong>. This is the value written into the contract as an immutable, and no function can change it after deployment. <strong>It is already committed on-chain</strong> — you can read it from the contract yourself. The generator and data needed to reproduce it will be published before minting opens.</p>
+  <p>The hash below is <strong>final</strong>. This is the value written into the contract as an immutable, and no function can change it after deployment. <strong>It is already committed on-chain</strong> — you can read it from the contract yourself. The generator and data needed to reproduce it are published in <a href="https://github.com/stillup-nft/stillup/tree/main/verify" target="_blank" rel="noopener">verify/</a>.</p>
   <div class="verify">
     seed &nbsp;&nbsp;&nbsp;= <b>333</b><br>
     count &nbsp;&nbsp;= <b>333</b><br>
@@ -327,7 +327,7 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
   <ol class="road">
     <li><span class="when done">done</span><p><b>World and cast settled</b>37 species specified, 333 tokens assigned, verifiable provenance.</p></li>
     <li><span class="when done">done</span><p><b>Artwork and assembly</b>37 originals, finish and background post-processing, 333 rendered.</p></li>
-    <li><span class="when done">done</span><p><b>Contract deployed</b>Base. Deployed and source-verified. Allowlist first, then 30 days public — schedule to be announced.</p></li>
+    <li><span class="when done">done</span><p><b>Mint open</b>Base. Public only, first come first served, 30 days from opening.</p></li>
     <li><span class="when later">undecided</span><p><b>After that</b>Nothing is decided. Nothing is promised. Whatever gets decided will be written here.</p></li>
   </ol>
 </div></section>
@@ -346,7 +346,7 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
     <p><strong>5% is declared on-chain</strong> (ERC-2981). As of 2026 most marketplaces do not enforce royalties, so it is a declaration, not a guarantee — and this project does not count royalties as income.</p></div></details>
   <details><summary>Who made this?</summary><div class="body">
     <p>Run under a pseudonym. The identity is not disclosed.</p>
-    <p>What is offered instead is what can be checked. <strong>The final hash is already committed on-chain</strong> — read it from the contract. The founder's three are minted in the constructor, and even claiming unsold supply is bound by the contract to all-or-nothing in numeric order. The generator and data to reproduce the draw are not published yet; they will be, before minting opens.</p></div></details>
+    <p>What is offered instead is what can be checked. <strong>The final hash is already committed on-chain</strong> — read it from the contract. The founder's three are minted in the constructor, and even claiming unsold supply is bound by the contract to all-or-nothing in numeric order. The generator and data to reproduce the draw are published in the same repository (<a href="https://github.com/stillup-nft/stillup/tree/main/verify" target="_blank" rel="noopener">verify/</a>).</p></div></details>
   <details><summary>Is this an investment?</summary><div class="body">
     <p>No. No returns are promised, no funds are raised, no utility is promised. 333 pictures is all there is.</p></div></details>
 </div></section>

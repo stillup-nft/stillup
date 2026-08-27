@@ -246,20 +246,20 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
 
 <section id="mint"><div class="wrap">
   <div class="eyebrow">ミント</div>
-  <h2>まだ開いていません</h2>
+  <h2>先着順です</h2>
   <div class="mintbox" id="mintLive">
     <span class="state"><i></i><span id="mintState" aria-live="polite">準備中 · ミント日程は追って告知</span></span>
     <div class="tw" style="margin:1.4rem 0 0"><table>
       <thead><tr><th>売れた順番</th><th class="c">価格</th><th>備考</th></tr></thead>
       <tbody>
-        <tr><td>1 – 3 枚目</td><td class="c mono">0.030 ETH</td><td>アローリスト優先</td></tr>
+        <tr><td>1 – 3 枚目</td><td class="c mono">0.030 ETH</td><td>開始価格</td></tr>
         <tr><td>4 – 6 枚目</td><td class="c mono">0.031 ETH</td><td></td></tr>
         <tr><td>7 – 9 枚目</td><td class="c mono">0.032 ETH</td><td></td></tr>
         <tr><td class="mono">⋮</td><td class="c mono">⋮</td><td>3 枚ごとに +0.001 ETH</td></tr>
         <tr><td>328 – 330 枚目</td><td class="c mono">0.139 ETH</td><td>最後</td></tr>
       </tbody>
     </table></div>
-    <p style="font-size:.84rem;margin:1.1rem 0 0"><strong>3 枚売れるごとに 0.001 ETH ずつ上がります。</strong>330 枚すべて出ると <strong>109 回</strong>上がり、最後の価格は 0.139 ETH になります。完売時の合計は 27.885 ETH。<strong>一度上がったら下がりません。</strong>アローリストの見返りは割引ではなく、<strong>いちばん安い区間に先に入れること</strong>です。</p>
+    <p style="font-size:.84rem;margin:1.1rem 0 0"><strong>3 枚売れるごとに 0.001 ETH ずつ上がります。</strong>330 枚すべて出ると <strong>109 回</strong>上がり、最後の価格は 0.139 ETH になります。完売時の合計は 27.885 ETH。<strong>一度上がったら下がりません。</strong>アローリストはありません — 全員が同じ入口から入り、早い人ほど安く買えます。</p>
     <div style="margin:1.3rem 0 0;padding:1rem 1.1rem;border:1px solid var(--line);border-radius:10px">
       <p style="font-size:.86rem;margin:0 0 .5rem"><strong>作った人はこの販売で一枚も買いません。</strong></p>
       <p style="font-size:.82rem;margin:0;opacity:.85">価格が上がる仕組みでは、作った人が自分の分を買って価格を押し上げられます。払った金はどのみち自分に戻るので損もしません。<strong>コントラクトでは防げない種類のことなので、代わりにここに書いておきます。</strong></p>
@@ -288,7 +288,7 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
       <div><b>3</b><span>ウォレットあたり上限</span></div>
     </div>
   </div>
-  <p>ミント期間は開いてから <strong>30 日</strong>です。<strong>333 枚を超えて刷ることはありません</strong> — コントラクトに定数として埋め込まれており、どの関数でも増やせません。</p>
+  <p>ミント期間は <strong>30 日</strong>です。<strong>333 枚を超えて刷ることはありません</strong> — コントラクトに定数として埋め込まれており、どの関数でも増やせません。</p>
   <p>締め切り時点で売れ残った分は<strong>作った人が受け取ります。</strong>隠さずに書いておきます。ただし<strong>全部かゼロか</strong>です — 一度の呼び出しで<strong>残りすべて</strong>が<strong>番号順に</strong>発行され、二度は呼べません。何枚受け取るかも、どの絵を受け取るかも選べません。販売が終わると配置（offset）が公開されるため、枚数を決められれば欲しい絵のところで止められてしまいます。だからコントラクトでその余地をなくしました。</p>
   <p>回収は<strong>販売期間が終わったあとにのみ</strong>可能です。販売中に在庫を横取りすることはできません。</p>
 </div></section>
@@ -297,7 +297,7 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
   <div class="eyebrow">検証</div>
   <h2>抽選をご自分で確かめられます</h2>
   <p>333 個の割り当ては<strong>固定シードで決定的</strong>です。同じシードで回し直せば同じ結果になります。</p>
-  <p>下のハッシュが<strong>最終版</strong>です。コントラクトに immutable として埋め込まれた値で、デプロイ後はどの関数でも変えられません。<strong>すでにオンチェーンにコミット済み</strong>です — コントラクトから直接読んで確かめられます。再現に必要な生成器とデータはミント開始前に公開します。</p>
+  <p>下のハッシュが<strong>最終版</strong>です。コントラクトに immutable として埋め込まれた値で、デプロイ後はどの関数でも変えられません。<strong>すでにオンチェーンにコミット済み</strong>です — コントラクトから直接読んで確かめられます。再現に必要な生成器とデータは <a href="https://github.com/stillup-nft/stillup/tree/main/verify" target="_blank" rel="noopener">verify/</a> に公開しています。</p>
   <div class="verify">
     seed &nbsp;&nbsp;&nbsp;= <b>333</b><br>
     count &nbsp;&nbsp;= <b>333</b><br>
@@ -327,7 +327,7 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
   <ol class="road">
     <li><span class="when done">完了</span><p><b>世界観とキャスト確定</b>37 種の仕様、333 トークンの割り当て、検証可能な provenance。</p></li>
     <li><span class="when done">完了</span><p><b>原画と組み立て</b>37 種の原画、刷り上がりと背景の後処理、333 枚のレンダリング。</p></li>
-    <li><span class="when done">完了</span><p><b>コントラクト デプロイ済み</b>Base。デプロイとソース検証は完了。アローリスト優先、その後パブリック 30 日 — 日程は追って告知。</p></li>
+    <li><span class="when done">完了</span><p><b>ミント進行中</b>Base。アローリストなしの先着順、開始から 30 日。</p></li>
     <li><span class="when later">未定</span><p><b>そのあと</b>決まっていることはありません。約束もしません。何か決まればこの場所に書きます。</p></li>
   </ol>
 </div></section>
@@ -346,7 +346,7 @@ footer p{color:var(--ink-3);font-size:.78rem;max-width:none}
     <p><strong>オンチェーンで 5% と宣言されています</strong>（ERC-2981）。2026 年現在、ほとんどのマーケットプレイスでロイヤリティは強制されないため、これは保証ではなく宣言です。このプロジェクトはロイヤリティを収益として計算していません。</p></div></details>
   <details><summary>誰が作ったのですか？</summary><div class="body">
     <p>仮名で運営しています。身元は公開しません。</p>
-    <p>かわりに確かめられるもので代えます。<strong>最終ハッシュはすでにオンチェーンにコミット済み</strong>です — コントラクトから直接読んでください。創設者分の三枚はコンストラクタで発行され、売れ残りの回収も全部一括・番号順にしかできないようコントラクトで縛られています。抽選を再現する生成器とデータはまだ公開しておらず、ミント開始前に公開します。</p></div></details>
+    <p>かわりに確かめられるもので代えます。<strong>最終ハッシュはすでにオンチェーンにコミット済み</strong>です — コントラクトから直接読んでください。創設者分の三枚はコンストラクタで発行され、売れ残りの回収も全部一括・番号順にしかできないようコントラクトで縛られています。抽選を再現する生成器とデータも同じリポジトリ（<a href="https://github.com/stillup-nft/stillup/tree/main/verify" target="_blank" rel="noopener">verify/</a>）で公開しています。</p></div></details>
   <details><summary>投資商品ですか？</summary><div class="body">
     <p>いいえ。収益を約束せず、資金を募らず、ユーティリティも約束しません。絵 333 枚がすべてです。</p></div></details>
 </div></section>
